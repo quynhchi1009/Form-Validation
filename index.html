@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Form Validation</title>
         <link rel="stylesheet" href="./assets/style.css" />
     </head>
     <body>
@@ -70,10 +70,27 @@
                 form: "#form-1",
                 errorSelector: ".form-message",
                 rules: [
-                    Validator.isRequired("#fullname"),
+                    Validator.isRequired(
+                        "#fullname",
+                        "Vui lòng nhập tên đầy đủ của bạn."
+                    ),
+                    Validator.isRequired("#email"),
                     Validator.isEmail("#email"),
                     Validator.isRequired("#password", 7),
+                    Validator.isRequired("#password_confirmation"),
+                    Validator.isConfirmed(
+                        "#password_confirmation",
+                        function () {
+                            return document.querySelector("#form-1 #password")
+                                .value;
+                        },
+                        "Mật khẩu nhập lại không chính xác"
+                    ),
                 ],
+                onSubmit: function (data) {
+                    //Call API
+                    console.log(data);
+                },
             });
         </script>
     </body>
